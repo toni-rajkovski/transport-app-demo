@@ -1,7 +1,7 @@
 jsonSchema2Pojo {
 
     generateBuilders = false
-    usePrimitives = false
+    usePrimitives = true
     source = files("${project.rootDir}/schema")
 
     // Package name used for generated Java classes (for types where a fully qualified name has not

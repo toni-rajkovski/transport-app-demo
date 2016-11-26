@@ -1,6 +1,9 @@
 package com.rajkovski.toni.transportdemo.services.parser;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.rajkovski.toni.transportdemo.model.Schema_template;
 
 import java.io.InputStream;
@@ -16,12 +19,13 @@ public class GsonDataParser implements IDataParser {
 
   @Override
   public Schema_template parseData(InputStream input) {
-    Gson gson = new Gson();
-
-    Reader reader = new InputStreamReader(input);
-    Schema_template result = gson.fromJson(reader, Schema_template.class);
-
-    return result;
+    if (input != null) {
+      Gson gson = new Gson();
+      Reader reader = new InputStreamReader(input);
+      Schema_template result = gson.fromJson(reader, Schema_template.class);
+      return result;
+    }
+    return null;
   }
 
 }
