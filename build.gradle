@@ -1,18 +1,17 @@
 buildscript {
     repositories {
         jcenter()
-        mavenCentral()
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.4.27'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        mavenCentral()
     }
 
 }

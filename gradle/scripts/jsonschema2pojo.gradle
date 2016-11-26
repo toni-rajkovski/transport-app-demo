@@ -1,5 +1,3 @@
-
-
 jsonSchema2Pojo {
 
     generateBuilders = false
