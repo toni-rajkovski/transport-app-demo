@@ -1,5 +1,18 @@
 apply plugin: 'com.android.application'
 
+
+// generate java classes from sample json file
+apply plugin: 'jsonschema2pojo'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.4.27'
+    }
+}
+apply from: '../gradle/scripts/jsonschema2pojo.gradle'
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -24,9 +37,16 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Required if generating Gson annotations
+    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
 }
+
+
