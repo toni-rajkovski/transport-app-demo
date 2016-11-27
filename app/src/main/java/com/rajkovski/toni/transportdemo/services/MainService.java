@@ -57,13 +57,8 @@ public class MainService {
       @Override
       public Schema_template call(InputStream inputStream) {
         Logger.d(LOG_TAG, "Transforming the input into model");
-        try {
-          Schema_template data = dataParser.parseData(inputStream);
-          return data;
-        } catch (Exception e) {
-          subscriber.onError(e);
-          return null;
-        }
+        Schema_template data = dataParser.parseData(inputStream);
+        return data;
       }
     };
 
