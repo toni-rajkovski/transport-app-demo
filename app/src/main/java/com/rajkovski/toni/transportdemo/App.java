@@ -9,7 +9,6 @@ import com.rajkovski.toni.transportdemo.dagger.DaggerAppComponent;
 /**
  * Application object.
  */
-
 public class App extends Application{
 
   private static App instance;
@@ -25,10 +24,20 @@ public class App extends Application{
       .build();
   }
 
+  /**
+   * Instance of the application.
+   *
+   * @return App
+   */
   public static App getInstance() {
     return instance;
   }
 
+  /**
+   * Dagger component for injection.
+   *
+   * @return AppComponent
+   */
   public AppComponent getAppComponent() {
     return appComponent;
   }

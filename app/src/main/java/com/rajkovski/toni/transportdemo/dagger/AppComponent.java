@@ -10,6 +10,11 @@ import dagger.Component;
 @Component(modules = {AppModule.class})
 public interface AppComponent {
 
+  /**
+   * Injects the members into {@link MainActivity}.
+   *
+   * @param activity the {@link MainActivity}
+   */
   void inject(MainActivity activity);
 
 }

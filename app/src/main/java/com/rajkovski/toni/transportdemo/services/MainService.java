@@ -32,7 +32,7 @@ public class MainService {
   }
 
   /**
-   * Retreives the data from outer source, parses it and returns it.
+   * Retrieves the data from outer source, parses it and returns it.
    *
    * @param subscriber subscriber
    * @param from the source where to take the data from
