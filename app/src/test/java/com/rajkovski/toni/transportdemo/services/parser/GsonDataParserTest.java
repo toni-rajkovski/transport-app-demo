@@ -1,5 +1,6 @@
 package com.rajkovski.toni.transportdemo.services.parser;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.rajkovski.toni.transportdemo.TestUtil;
 import com.rajkovski.toni.transportdemo.model.Route;
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertNull;
 
 public class GsonDataParserTest {
 
-  private GsonDataParser gsonDataParser = new GsonDataParser();
+  private GsonDataParser gsonDataParser = new GsonDataParser(new Gson());
 
   @Test
   public void parseData_success_full() {
