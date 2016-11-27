@@ -27,15 +27,15 @@ public class SvgService {
     this.cache = cache;
   }
 
-  public void loadSvgFromServer(Subscriber<InputStream> subscriber, final String url) {
-    Observable.OnSubscribe<InputStream> loadFromNetwork = new Observable.OnSubscribe<InputStream>() {
+  public void loadSvgFromServer(Subscriber<byte[]> subscriber, final String url) {
+    Observable.OnSubscribe<byte[]> loadFromNetwork = new Observable.OnSubscribe<byte[]>() {
       @Override
-      public void call(Subscriber<? super InputStream> sub) {
+      public void call(Subscriber<? super byte[]> sub) {
         try {
           byte[] cachedImage = cache.getImageByUrl(url);
           if (cachedImage != null) {
             Logger.d(LOG_TAG, "Image with url '" + url + "' found in cache");
-            sub.onNext(new ByteArrayInputStream(cachedImage));
+            sub.onNext(cachedImage);
             sub.onCompleted();
           } else {
             Logger.d(LOG_TAG, "Loading the data from " + url);
@@ -46,7 +46,7 @@ public class SvgService {
             Response response = httpClient.newCall(request).execute();
             cache.putImage(url, response.body().bytes());
 
-            sub.onNext(new ByteArrayInputStream(cache.getImageByUrl(url)));
+            sub.onNext(cache.getImageByUrl(url));
             sub.onCompleted();
           }
         } catch (Exception e) {
