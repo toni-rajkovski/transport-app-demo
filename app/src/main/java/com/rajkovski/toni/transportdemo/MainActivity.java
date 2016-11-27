@@ -1,13 +1,23 @@
 package com.rajkovski.toni.transportdemo;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
+import com.rajkovski.toni.transportdemo.logger.Logger;
 import com.rajkovski.toni.transportdemo.model.Schema_template;
 import com.rajkovski.toni.transportdemo.services.MainService;
+import com.rajkovski.toni.transportdemo.services.svg.SvgService;
+import com.scand.svg.SVGHelper;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -19,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
   @Inject
   MainService mainService;
+
+  @Inject
+  SvgService svgService;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +59,28 @@ public class MainActivity extends AppCompatActivity {
 
       }
     }, "data.json");
+
+    svgService.loadSvgFromServer(new Subscriber<byte[]>() {
+      @Override
+      public void onCompleted() {
+        Logger.e(LOG_TAG, "Completed");
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Logger.e(LOG_TAG, "Problem",  e);
+      }
+
+      @Override
+      public void onNext(byte[] bytes) {
+        try {
+          ImageView image = (ImageView) findViewById(R.id.image);
+          SVGHelper.useContext(MainActivity.this).open(new String(bytes)).setBaseBounds(20, 20).bitmapAsBackground(image);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }, "https://d3m2tfu2xpiope.cloudfront.net/providers/car2go.svg");
+
   }
 }
