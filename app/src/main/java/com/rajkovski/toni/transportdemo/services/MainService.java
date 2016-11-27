@@ -2,11 +2,8 @@ package com.rajkovski.toni.transportdemo.services;
 
 import android.util.Log;
 
-import com.rajkovski.toni.transportdemo.App;
 import com.rajkovski.toni.transportdemo.model.Schema_template;
-import com.rajkovski.toni.transportdemo.services.loader.AssetsDataLoader;
 import com.rajkovski.toni.transportdemo.services.loader.IDataLoader;
-import com.rajkovski.toni.transportdemo.services.parser.GsonDataParser;
 import com.rajkovski.toni.transportdemo.services.parser.IDataParser;
 
 import java.io.IOException;
@@ -24,8 +21,14 @@ import rx.schedulers.Schedulers;
 public class MainService {
 
   private static final String LOG_TAG = "MainService";
-  private IDataLoader assetsDataLoader = new AssetsDataLoader(App.getInstance());
-  private IDataParser gsonDataParser = new GsonDataParser();
+
+  private IDataLoader dataLoader;
+  private IDataParser dataParser;
+
+  public MainService(IDataLoader dataLoader, IDataParser dataParser) {
+    this.dataLoader = dataLoader;
+    this.dataParser = dataParser;
+  }
 
   /**
    * Retreives the data from outer source, parses it and returns it.
@@ -40,7 +43,7 @@ public class MainService {
       public void call(Subscriber<? super InputStream> sub) {
         try {
           Log.d(LOG_TAG, "Loading the data from " + from);
-          InputStream inputStream = assetsDataLoader.loadData(from);
+          InputStream inputStream = dataLoader.loadData(from);
           sub.onNext(inputStream);
           sub.onCompleted();
         } catch (IOException e) {
@@ -53,8 +56,8 @@ public class MainService {
     Func1<InputStream, Schema_template> parserMapping = new Func1<InputStream, Schema_template>() {
       @Override
       public Schema_template call(InputStream inputStream) {
-        Log.d(LOG_TAG, "Transforming the input into model " + from);
-        Schema_template data = gsonDataParser.parseData(inputStream);
+        Log.d(LOG_TAG, "Transforming the input into model");
+        Schema_template data = dataParser.parseData(inputStream);
         return data;
       }
     };

@@ -4,6 +4,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'jsonschema2pojo'
 apply from: '../gradle/scripts/jsonschema2pojo.gradle'
 
+apply plugin: 'com.neenbedankt.android-apt'
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -30,8 +32,14 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:24.2.1'
 
+    // RxJava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+
+    // Dagger 2
+    apt 'com.google.dagger:dagger-compiler:2.7'
+    compile 'com.google.dagger:dagger:2.7'
+    provided 'javax.annotation:jsr250-api:1.0'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
