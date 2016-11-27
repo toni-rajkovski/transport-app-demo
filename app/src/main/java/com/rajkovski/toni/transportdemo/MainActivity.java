@@ -70,12 +70,17 @@ public class MainActivity extends AppCompatActivity {
       public void onNext(byte[] bytes) {
         try {
           ImageView image = (ImageView) findViewById(R.id.image);
-          SVGHelper.useContext(MainActivity.this).open(new String(bytes)).setBaseBounds(20, 20).bitmapAsBackground(image);
+          SVGHelper
+            .useContext(MainActivity.this)
+            .open(new String(bytes))
+            .setBaseBounds(20, 20)
+            .setKeepAspectRatio(true)
+            .pictureAsBackground(image);
         } catch (IOException e) {
           e.printStackTrace();
         }
       }
-    }, "https://d3m2tfu2xpiope.cloudfront.net/providers/car2go.svg");
+    }, "https://d3m2tfu2xpiope.cloudfront.net/vehicles/subway.svg");
 
   }
 }
