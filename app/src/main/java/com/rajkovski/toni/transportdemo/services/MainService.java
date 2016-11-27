@@ -2,6 +2,7 @@ package com.rajkovski.toni.transportdemo.services;
 
 import android.util.Log;
 
+import com.rajkovski.toni.transportdemo.logger.Logger;
 import com.rajkovski.toni.transportdemo.model.Schema_template;
 import com.rajkovski.toni.transportdemo.services.loader.IDataLoader;
 import com.rajkovski.toni.transportdemo.services.parser.IDataParser;
@@ -36,13 +37,13 @@ public class MainService {
    * @param subscriber subscriber
    * @param from the source where to take the data from
    */
-  public void getData(Subscriber<Schema_template> subscriber, final String from) {
+  public <T extends Subscriber<Schema_template>> void getData(final T subscriber, final String from) {
 
     Observable.OnSubscribe<InputStream> loadFromNetwork = new Observable.OnSubscribe<InputStream>() {
       @Override
       public void call(Subscriber<? super InputStream> sub) {
         try {
-          Log.d(LOG_TAG, "Loading the data from " + from);
+          Logger.d(LOG_TAG, "Loading the data from " + from);
           InputStream inputStream = dataLoader.loadData(from);
           sub.onNext(inputStream);
           sub.onCompleted();
@@ -52,13 +53,17 @@ public class MainService {
       }
     };
 
-
     Func1<InputStream, Schema_template> parserMapping = new Func1<InputStream, Schema_template>() {
       @Override
       public Schema_template call(InputStream inputStream) {
-        Log.d(LOG_TAG, "Transforming the input into model");
-        Schema_template data = dataParser.parseData(inputStream);
-        return data;
+        Logger.d(LOG_TAG, "Transforming the input into model");
+        try {
+          Schema_template data = dataParser.parseData(inputStream);
+          return data;
+        } catch (Exception e) {
+          subscriber.onError(e);
+          return null;
+        }
       }
     };
 
