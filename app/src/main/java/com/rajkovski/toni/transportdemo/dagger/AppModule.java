@@ -69,8 +69,8 @@ public class AppModule {
 
   @Provides
   @Singleton
-  SvgService provideSvgService() {
-    return new SvgService();
+  SvgService provideSvgService(OkHttpClient httpClient, ISvgCache cache) {
+    return new SvgService(httpClient, cache);
   }
 
 }
