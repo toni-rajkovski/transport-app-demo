@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.caverock.androidsvg.SVG;
 import com.rajkovski.toni.transportdemo.model.Schema_template;
 import com.rajkovski.toni.transportdemo.services.MainService;
 
