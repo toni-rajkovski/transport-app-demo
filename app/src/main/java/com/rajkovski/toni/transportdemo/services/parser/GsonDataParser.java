@@ -17,10 +17,15 @@ import java.io.Reader;
  */
 public class GsonDataParser implements IDataParser {
 
+  private Gson gson;
+
+  public GsonDataParser(Gson gson) {
+    this.gson = gson;
+  }
+
   @Override
   public Schema_template parseData(InputStream input) {
     if (input != null) {
-      Gson gson = new Gson();
       Reader reader = new InputStreamReader(input);
       Schema_template result = gson.fromJson(reader, Schema_template.class);
       return result;

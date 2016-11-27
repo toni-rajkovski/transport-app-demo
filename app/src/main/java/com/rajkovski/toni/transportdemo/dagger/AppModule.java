@@ -2,7 +2,6 @@ package com.rajkovski.toni.transportdemo.dagger;
 
 import android.app.Application;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rajkovski.toni.transportdemo.App;
@@ -29,8 +28,8 @@ public class AppModule {
 
   @Provides
   @Singleton
-  IDataParser provideDataParser() {
-    return new GsonDataParser();
+  IDataParser provideDataParser(Gson gson) {
+    return new GsonDataParser(gson);
   }
 
   @Provides
