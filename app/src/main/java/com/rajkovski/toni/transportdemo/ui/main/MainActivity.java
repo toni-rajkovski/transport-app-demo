@@ -1,4 +1,4 @@
-package com.rajkovski.toni.transportdemo;
+package com.rajkovski.toni.transportdemo.ui.main;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.rajkovski.toni.transportdemo.App;
+import com.rajkovski.toni.transportdemo.R;
 import com.rajkovski.toni.transportdemo.logger.Logger;
 import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.services.MainService;

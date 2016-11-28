@@ -1,6 +1,6 @@
 package com.rajkovski.toni.transportdemo.dagger;
 
-import com.rajkovski.toni.transportdemo.MainActivity;
+import com.rajkovski.toni.transportdemo.ui.main.MainActivity;
 
 import javax.inject.Singleton;
 
