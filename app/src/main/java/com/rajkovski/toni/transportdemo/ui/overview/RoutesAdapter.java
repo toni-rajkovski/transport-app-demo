@@ -1,8 +1,10 @@
 package com.rajkovski.toni.transportdemo.ui.overview;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.rajkovski.toni.transportdemo.R;
 import com.rajkovski.toni.transportdemo.logger.Logger;
 import com.rajkovski.toni.transportdemo.model.ModelUtil;
 import com.rajkovski.toni.transportdemo.model.Route;
+import com.rajkovski.toni.transportdemo.model.Segment;
 import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.services.svg.SvgService;
 import com.scand.svg.SVGHelper;
@@ -70,6 +73,22 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
     String providerUrl = ModelUtil.findProviderIconUrl(transportRoutes, route.getProvider());
     loadAndDisplaySvgImage(providerUrl,
       (ImageView) holder.viewsHolder.findViewById(R.id.overview_route_provider_icon));
+
+    ViewGroup segmentsHolder =
+      (ViewGroup) holder.viewsHolder.findViewById(R.id.overview_route_segments);
+    segmentsHolder.removeAllViews();
+    for (Segment segment: route.getSegments()) {
+      View segmentView = LayoutInflater.from(context).inflate(R.layout.segment_item, null);
+      ImageView segmentImage = (ImageView) segmentView.findViewById(R.id.overview_route_segment_image);
+      loadAndDisplaySvgImage(segment.getIcon_url(),
+        segmentImage);
+
+      View imageBackground = segmentView.findViewById(R.id.overview_route_segment_image_background);
+      imageBackground.setBackgroundColor(Color.parseColor(segment.getColor()));
+      ((TextView) segmentView.findViewById(R.id.overview_route_segment_name)).setText(
+        segment.getName());
+      segmentsHolder.addView(segmentView);
+    }
   }
 
   private void loadAndDisplaySvgImage(final String url, final ImageView view) {
