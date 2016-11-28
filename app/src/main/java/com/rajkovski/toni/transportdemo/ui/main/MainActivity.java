@@ -1,5 +1,6 @@
 package com.rajkovski.toni.transportdemo.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,8 @@ import com.rajkovski.toni.transportdemo.logger.Logger;
 import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.services.MainService;
 import com.rajkovski.toni.transportdemo.services.svg.SvgService;
+import com.rajkovski.toni.transportdemo.ui.overview.OverviewActivity;
+import com.rajkovski.toni.transportdemo.ui.overview.OverviewPresenter;
 import com.scand.svg.SVGHelper;
 
 import java.io.IOException;
@@ -53,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onNext(TransportRoutes schema) {
         Log.d(LOG_TAG, "Data received");
-
+        Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
+        intent.putExtra(OverviewPresenter.INTENT_KEY_ROUTES, schema);
+        startActivity(intent);
       }
     }, "data.json");
 
