@@ -5,7 +5,7 @@ import com.rajkovski.toni.transportdemo.TestLogger;
 import com.rajkovski.toni.transportdemo.TestUtil;
 import com.rajkovski.toni.transportdemo.logger.AndroidLogger;
 import com.rajkovski.toni.transportdemo.logger.Logger;
-import com.rajkovski.toni.transportdemo.model.Schema_template;
+import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.services.loader.IDataLoader;
 import com.rajkovski.toni.transportdemo.services.parser.IDataParser;
 
@@ -53,7 +53,7 @@ public class MainServiceTest {
   @Test
   public void getData_success() throws IOException {
     //given
-    Schema_template returnValue = new Schema_template();
+    TransportRoutes returnValue = new TransportRoutes();
 
     IDataLoader mockLoader = mock(IDataLoader.class);
     when(mockLoader.loadData(any(String.class))).thenReturn(
@@ -63,7 +63,7 @@ public class MainServiceTest {
     when(mockParser.parseData(any(InputStream.class))).thenReturn(returnValue);
     
     MainService mainService = new MainService(mockLoader, mockParser);
-    TestSubscriber<Schema_template> testSubscriber = new TestSubscriber<>();
+    TestSubscriber<TransportRoutes> testSubscriber = new TestSubscriber<>();
 
     //when
     mainService.getData(testSubscriber, "successLocation");
@@ -89,7 +89,7 @@ public class MainServiceTest {
     when(mockParser.parseData(any(InputStream.class))).thenThrow(JsonSyntaxException.class);
 
     MainService mainService = new MainService(mockLoader, mockParser);
-    TestSubscriber<Schema_template> testSubscriber = new TestSubscriber<>();
+    TestSubscriber<TransportRoutes> testSubscriber = new TestSubscriber<>();
 
     //when
     mainService.getData(testSubscriber, "parsingProblemLocation");
@@ -104,7 +104,7 @@ public class MainServiceTest {
   @Test
   public void getData_error_loading() throws IOException {
     //given
-    Schema_template returnValue = new Schema_template();
+    TransportRoutes returnValue = new TransportRoutes();
 
     IDataLoader mockLoader = mock(IDataLoader.class);
     when(mockLoader.loadData(any(String.class))).thenThrow(IOException.class);
@@ -113,7 +113,7 @@ public class MainServiceTest {
     when(mockParser.parseData(any(InputStream.class))).thenReturn(returnValue);
 
     MainService mainService = new MainService(mockLoader, mockParser);
-    TestSubscriber<Schema_template> testSubscriber = new TestSubscriber<>();
+    TestSubscriber<TransportRoutes> testSubscriber = new TestSubscriber<>();
 
     //when
     mainService.getData(testSubscriber, "loadingProblemLocation");

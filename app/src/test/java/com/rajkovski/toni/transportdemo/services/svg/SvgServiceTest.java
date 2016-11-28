@@ -1,14 +1,8 @@
 package com.rajkovski.toni.transportdemo.services.svg;
 
-import com.google.gson.JsonSyntaxException;
 import com.rajkovski.toni.transportdemo.TestLogger;
-import com.rajkovski.toni.transportdemo.TestUtil;
 import com.rajkovski.toni.transportdemo.logger.AndroidLogger;
 import com.rajkovski.toni.transportdemo.logger.Logger;
-import com.rajkovski.toni.transportdemo.model.Schema_template;
-import com.rajkovski.toni.transportdemo.services.MainService;
-import com.rajkovski.toni.transportdemo.services.loader.IDataLoader;
-import com.rajkovski.toni.transportdemo.services.parser.IDataParser;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -16,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.Headers;
@@ -25,7 +18,6 @@ import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.internal.http.RealResponseBody;
-import okhttp3.mockwebserver.MockWebServer;
 import okio.Buffer;
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
@@ -35,8 +27,6 @@ import rx.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**

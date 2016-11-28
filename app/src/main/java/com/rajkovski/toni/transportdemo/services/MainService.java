@@ -3,7 +3,7 @@ package com.rajkovski.toni.transportdemo.services;
 import android.util.Log;
 
 import com.rajkovski.toni.transportdemo.logger.Logger;
-import com.rajkovski.toni.transportdemo.model.Schema_template;
+import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.services.loader.IDataLoader;
 import com.rajkovski.toni.transportdemo.services.parser.IDataParser;
 
@@ -37,7 +37,7 @@ public class MainService {
    * @param subscriber subscriber
    * @param from the source where to take the data from
    */
-  public <T extends Subscriber<Schema_template>> void getData(final T subscriber, final String from) {
+  public <T extends Subscriber<TransportRoutes>> void getData(final T subscriber, final String from) {
 
     Observable.OnSubscribe<InputStream> loadFromNetwork = new Observable.OnSubscribe<InputStream>() {
       @Override
@@ -53,11 +53,11 @@ public class MainService {
       }
     };
 
-    Func1<InputStream, Schema_template> parserMapping = new Func1<InputStream, Schema_template>() {
+    Func1<InputStream, TransportRoutes> parserMapping = new Func1<InputStream, TransportRoutes>() {
       @Override
-      public Schema_template call(InputStream inputStream) {
+      public TransportRoutes call(InputStream inputStream) {
         Logger.d(LOG_TAG, "Transforming the input into model");
-        Schema_template data = dataParser.parseData(inputStream);
+        TransportRoutes data = dataParser.parseData(inputStream);
         return data;
       }
     };

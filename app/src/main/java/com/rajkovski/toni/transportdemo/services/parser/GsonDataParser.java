@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.rajkovski.toni.transportdemo.model.Schema_template;
+import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,10 +24,10 @@ public class GsonDataParser implements IDataParser {
   }
 
   @Override
-  public Schema_template parseData(InputStream input) {
+  public TransportRoutes parseData(InputStream input) {
     if (input != null) {
       Reader reader = new InputStreamReader(input);
-      Schema_template result = gson.fromJson(reader, Schema_template.class);
+      TransportRoutes result = gson.fromJson(reader, TransportRoutes.class);
       return result;
     }
     return null;

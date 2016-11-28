@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.rajkovski.toni.transportdemo.TestUtil;
 import com.rajkovski.toni.transportdemo.model.Route;
-import com.rajkovski.toni.transportdemo.model.Schema_template;
+import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.model.Segment;
 import com.rajkovski.toni.transportdemo.model.Stop;
 
@@ -32,7 +32,7 @@ public class GsonDataParserTest {
     InputStream input = TestUtil.loadResource("sample_full.json");
 
     //when
-    Schema_template data = gsonDataParser.parseData(input);
+    TransportRoutes data = gsonDataParser.parseData(input);
 
     //then
     assertNotNull(data);
@@ -89,7 +89,7 @@ public class GsonDataParserTest {
     InputStream input = TestUtil.loadResource("sample_empty.json");
 
     //when
-    Schema_template data = gsonDataParser.parseData(input);
+    TransportRoutes data = gsonDataParser.parseData(input);
 
     //then
     assertNotNull(data);
@@ -108,7 +108,7 @@ public class GsonDataParserTest {
     InputStream input = null;
 
     //when
-    Schema_template data = gsonDataParser.parseData(input);
+    TransportRoutes data = gsonDataParser.parseData(input);
 
     //then
     assertNull(data);
@@ -120,7 +120,7 @@ public class GsonDataParserTest {
     InputStream input = new ByteArrayInputStream(new byte[] {23, 43, 53, 123});
 
     //when
-    Schema_template data = gsonDataParser.parseData(input);
+    TransportRoutes data = gsonDataParser.parseData(input);
 
     //then
     Assert.fail("Exception expected");

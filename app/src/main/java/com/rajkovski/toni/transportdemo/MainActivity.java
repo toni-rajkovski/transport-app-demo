@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.rajkovski.toni.transportdemo.logger.Logger;
-import com.rajkovski.toni.transportdemo.model.Schema_template;
+import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.services.MainService;
 import com.rajkovski.toni.transportdemo.services.svg.SvgService;
 import com.scand.svg.SVGHelper;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void onLoadData(View view) {
-    mainService.getData(new Subscriber<Schema_template>() {
+    mainService.getData(new Subscriber<TransportRoutes>() {
       @Override
       public void onCompleted() {
         Log.d(LOG_TAG, "onCompleted");
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
       }
 
       @Override
-      public void onNext(Schema_template schema) {
+      public void onNext(TransportRoutes schema) {
         Log.d(LOG_TAG, "Data received");
 
       }

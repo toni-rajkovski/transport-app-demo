@@ -1,6 +1,6 @@
 package com.rajkovski.toni.transportdemo.services.parser;
 
-import com.rajkovski.toni.transportdemo.model.Schema_template;
+import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 
 import java.io.InputStream;
 
@@ -17,6 +17,6 @@ public interface IDataParser {
    * @param input the input stream with the json.
    * @return Schema_template
    */
-  Schema_template parseData(InputStream input);
+  TransportRoutes parseData(InputStream input);
 
 }
