@@ -39,7 +39,7 @@ public class OverviewActivity extends AppCompatActivity implements IOverviewView
     mRecyclerView.setLayoutManager(layoutManager);
 
     // specify an adapter (see also next example)
-    RecyclerView.Adapter adapter = new RoutesAdapter(routes.getRoutes());
+    RecyclerView.Adapter adapter = new RoutesAdapter(this, routes);
     mRecyclerView.setAdapter(adapter);
   }
 }

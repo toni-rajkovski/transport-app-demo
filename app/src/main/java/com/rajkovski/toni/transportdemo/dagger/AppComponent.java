@@ -1,6 +1,7 @@
 package com.rajkovski.toni.transportdemo.dagger;
 
 import com.rajkovski.toni.transportdemo.ui.main.MainActivity;
+import com.rajkovski.toni.transportdemo.ui.overview.RoutesAdapter;
 
 import javax.inject.Singleton;
 
@@ -16,5 +17,12 @@ public interface AppComponent {
    * @param activity the {@link MainActivity}
    */
   void inject(MainActivity activity);
+
+  /**
+   * Injects the members into {@link RoutesAdapter}
+   *
+   * @param routesAdapter the {@link RoutesAdapter}
+   */
+  void inject(RoutesAdapter routesAdapter);
 
 }

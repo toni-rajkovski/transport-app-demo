@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Transport App</string>
+
+    <string name="public_transport">Public Transport</string>
+    <string name="car_sharing">Car Sharing</string>
+    <string name="private_bike">Private Bike</string>
+    <string name="bike_sharing">Bike Sharing</string>
+    <string name="taxi">Taxi</string>
+
 </resources>
