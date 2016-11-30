@@ -10,13 +10,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
 import com.rajkovski.toni.transportdemo.R;
 import com.rajkovski.toni.transportdemo.model.Route;
 import com.rajkovski.toni.transportdemo.model.Segment;
+import com.rajkovski.toni.transportdemo.model.Stop;
+import com.rajkovski.toni.transportdemo.util.DateTimeUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -45,6 +49,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
   private void addRouteToMap(Route route) {
     final LatLngBounds.Builder boundsBuilder = LatLngBounds.builder();
+    final List<MarkerOptions> markers = new ArrayList<>();
     if (route != null && route.getSegments().size() > 0) {
       for (Segment segment : route.getSegments()) {
         if (segment.getPolyline() != null) {
@@ -56,22 +61,29 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
           }
           polylineOptions.color(Color.parseColor(segment.getColor()));
           map.addPolyline(polylineOptions);
-          map.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
-            @Override
-            public void onPolylineClick(Polyline polyline) {
-              // TODO display segment details
-            }
-          });
+
+        }
+        if (segment.getStops() != null) {
+          for (Stop stop : segment.getStops()) {
+            MarkerOptions markerOptions = new MarkerOptions()
+              .title(stop.getName())
+              .snippet(DateTimeUtil.timeStringHHMM(stop.getDatetime()))
+              .position(new LatLng(stop.getLat(), stop.getLng()))
+              .visible(true);
+            markers.add(markerOptions);
+          }
         }
       }
       map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
          @Override
          public void onMapLoaded() {
+           for (MarkerOptions marker : markers) {
+             map.addMarker(marker);
+           }
            map.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 300));
          }
        });
     }
   }
-
 
 }
