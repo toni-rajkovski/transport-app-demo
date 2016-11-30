@@ -14,19 +14,29 @@ public final class ModelUtil {
    * @return url
    */
   public static String findProviderIconUrl(TransportRoutes transportRoutes, String provider) {
+    Provider_attributes providerAttributes = transportRoutes.getProvider_attributes();
+    if (providerAttributes == null) {
+      return null;
+    }
     switch (provider) {
       case "vbb":
-        return transportRoutes.getProvider_attributes().getVbb().getProvider_icon_url();
+        return providerAttributes.getVbb() != null
+          ? providerAttributes.getVbb().getProvider_icon_url() : null;
       case "drivenow":
-        return transportRoutes.getProvider_attributes().getDrivenow().getProvider_icon_url();
+        return providerAttributes.getDrivenow() != null ?
+          providerAttributes.getDrivenow().getProvider_icon_url() : null;
       case "car2go":
-        return transportRoutes.getProvider_attributes().getCar2go().getProvider_icon_url();
+        return providerAttributes.getCar2go() != null ?
+          providerAttributes.getCar2go().getProvider_icon_url() : null;
       case "google":
-        return transportRoutes.getProvider_attributes().getGoogle().getProvider_icon_url();
+        return providerAttributes.getGoogle() != null ?
+          providerAttributes.getGoogle().getProvider_icon_url() : null;
       case "nextbike":
-        return transportRoutes.getProvider_attributes().getNextbike().getProvider_icon_url();
+        return providerAttributes.getNextbike() != null ?
+          providerAttributes.getNextbike().getProvider_icon_url() : null;
       case "callabike":
-        return transportRoutes.getProvider_attributes().getCallabike().getProvider_icon_url();
+        return providerAttributes.getNextbike() != null ?
+          providerAttributes.getCallabike().getProvider_icon_url() : null;
       default:
         return null;
     }
