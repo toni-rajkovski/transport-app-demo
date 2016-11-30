@@ -6,5 +6,7 @@
     <string name="private_bike">Private Bike</string>
     <string name="bike_sharing">Bike Sharing</string>
     <string name="taxi">Taxi</string>
+    <string name="error_no_routes_found">No routes found</string>
+    <string name="error_problem_displaying_routes">Error during displaying routes</string>
 
 </resources>
