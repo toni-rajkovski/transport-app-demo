@@ -71,8 +71,10 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
       findRouteTypeText(route.getType()));
 
     String providerUrl = ModelUtil.findProviderIconUrl(transportRoutes, route.getProvider());
-    loadAndDisplaySvgImage(providerUrl,
-      (ImageView) holder.viewsHolder.findViewById(R.id.overview_route_provider_icon));
+    if (providerUrl != null) {
+      loadAndDisplaySvgImage(providerUrl,
+        (ImageView) holder.viewsHolder.findViewById(R.id.overview_route_provider_icon));
+    }
 
     ViewGroup segmentsHolder =
       (ViewGroup) holder.viewsHolder.findViewById(R.id.overview_route_segments);
