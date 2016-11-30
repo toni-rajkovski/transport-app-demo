@@ -11,6 +11,8 @@
     android:orientation="vertical"
     tools:context="com.rajkovski.toni.transportdemo.ui.overview.OverviewActivity">
 
+    <include layout="@layout/error_view" />
+
     <android.support.v7.widget.RecyclerView
       android:id="@+id/overview_recycler_view"
       android:layout_width="match_parent"

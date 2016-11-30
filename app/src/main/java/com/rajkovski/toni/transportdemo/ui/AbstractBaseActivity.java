@@ -20,8 +20,8 @@ public class AbstractBaseActivity extends AppCompatActivity {
   private TextView errorText;
 
   @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  protected void onResume() {
+    super.onResume();
     errorView = (ViewGroup) findViewById(R.id.error_view);
     errorText = (TextView) findViewById(R.id.error_text);
   }
