@@ -23,7 +23,9 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Subscriber;
+import rx.subjects.PublishSubject;
 
 public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder> {
 
@@ -34,14 +36,16 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
   @Inject
   SvgService svgService;
 
-  public class ViewHolder extends RecyclerView.ViewHolder {
+  private final PublishSubject<Route> onClickSubject = PublishSubject.create();
+
+  class ViewHolder extends RecyclerView.ViewHolder {
     ViewGroup viewsHolder;
     TextView priceText;
     TextView routeTypeText;
     ImageView providerImage;
     ViewGroup segmentsHolder;
 
-    public ViewHolder(ViewGroup v) {
+    ViewHolder(ViewGroup v) {
       super(v);
       viewsHolder = v;
 
@@ -51,7 +55,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
       segmentsHolder = (ViewGroup) viewsHolder.findViewById(R.id.overview_route_segments);
     }
 
-    void fillWithData(Route route) {
+    void fillWithData(final Route route) {
       if (route.getPrice() != null) {
         priceText.setText(route.getPrice().getCurrency() + " " + route.getPrice().getAmount());
       } else {
@@ -78,6 +82,12 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
           segment.getName());
         segmentsHolder.addView(segmentView);
       }
+      viewsHolder.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          onClickSubject.onNext(route);
+        }
+      });
     }
   }
 
@@ -138,5 +148,9 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
   @Override
   public int getItemCount() {
     return transportRoutes.getRoutes().size();
+  }
+
+  public Observable<Route> getClicksObservable(){
+    return onClickSubject.asObservable();
   }
 }

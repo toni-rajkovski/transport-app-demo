@@ -13,6 +13,8 @@ import com.rajkovski.toni.transportdemo.R;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
+  public static final String INTENT_KEY_ROUTE_FOR_MAP = "transport_demo.route_for_map";
+
   private GoogleMap mMap;
 
   @Override
@@ -24,7 +26,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
       .findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
   }
-
 
   /**
    * Manipulates the map once available.
@@ -38,6 +39,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
   @Override
   public void onMapReady(GoogleMap googleMap) {
     mMap = googleMap;
+
+    //TODO do something with the route
 
     // Add a marker in Sydney and move the camera
     LatLng sydney = new LatLng(-34, 151);

@@ -5,7 +5,9 @@ import android.content.Intent;
 
 import com.rajkovski.toni.transportdemo.R;
 import com.rajkovski.toni.transportdemo.logger.Logger;
+import com.rajkovski.toni.transportdemo.model.Route;
 import com.rajkovski.toni.transportdemo.model.TransportRoutes;
+import com.rajkovski.toni.transportdemo.ui.map.MapActivity;
 
 /**
  * Implementation of {@link IOverviewPresenter}
@@ -39,8 +41,10 @@ public class OverviewPresenter implements IOverviewPresenter {
   }
 
   @Override
-  public void onRouteClick(int position) {
-    //TODO take the user to details screen
+  public void onRouteClick(Route route) {
+    Intent intent = new Intent(context, MapActivity.class);
+    intent.putExtra(MapActivity.INTENT_KEY_ROUTE_FOR_MAP, route);
+    context.startActivity(intent);
   }
 
 }

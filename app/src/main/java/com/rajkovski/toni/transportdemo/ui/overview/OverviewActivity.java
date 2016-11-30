@@ -5,8 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.rajkovski.toni.transportdemo.R;
+import com.rajkovski.toni.transportdemo.model.Route;
 import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.ui.AbstractBaseActivity;
+
+import rx.functions.Action1;
 
 public class OverviewActivity extends AbstractBaseActivity implements IOverviewView {
 
@@ -36,13 +39,18 @@ public class OverviewActivity extends AbstractBaseActivity implements IOverviewV
 
     mRecyclerView.setHasFixedSize(true);
 
-    // use a linear layout manager
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     mRecyclerView.setLayoutManager(layoutManager);
 
-    // specify an adapter (see also next example)
-    RecyclerView.Adapter adapter = new RoutesAdapter(this, routes);
+    RoutesAdapter adapter = new RoutesAdapter(this, routes);
     mRecyclerView.setAdapter(adapter);
+
+    adapter.getClicksObservable().subscribe(new Action1<Route>() {
+      @Override
+      public void call(Route route) {
+        overviewPresenter.onRouteClick(route);
+      }
+    });
 
   }
 
