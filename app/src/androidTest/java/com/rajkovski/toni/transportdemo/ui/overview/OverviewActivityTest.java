@@ -62,6 +62,7 @@ public class OverviewActivityTest {
     // starts the activity with the routes
     startActivityWithIntent(loadTestRoutes());
 
+    // check the data on the screen
     onView(withRecyclerView(R.id.overview_recycler_view).atPositionOnView(0, R.id.overview_route_cost))
       .check(matches(withText("EUR 270")));
     onView(withRecyclerView(R.id.overview_recycler_view).atPositionOnView(0, R.id.overview_route_type))

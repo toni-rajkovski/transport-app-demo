@@ -48,6 +48,11 @@ public class App extends Application{
     return appComponent;
   }
 
+  /**
+   * Replaces the default AppCompoment with a new one.
+   *
+   * @param appComponent the new appCompoment
+   */
   public void replaceAppCompoment(AppComponent appComponent) {
     this.appComponent = appComponent;
 

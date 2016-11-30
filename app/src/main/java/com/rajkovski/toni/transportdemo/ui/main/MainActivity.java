@@ -23,15 +23,15 @@ import javax.inject.Inject;
 
 import rx.Subscriber;
 
+/**
+ * Simple activity that just loads the data and takes the user to the next screen.
+ */
 public class MainActivity extends AppCompatActivity {
 
   private static final String LOG_TAG = "MainActivity";
 
   @Inject
   MainService mainService;
-
-  @Inject
-  SvgService svgService;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -54,40 +54,12 @@ public class MainActivity extends AppCompatActivity {
       }
 
       @Override
-      public void onNext(TransportRoutes schema) {
+      public void onNext(TransportRoutes routes) {
         Log.d(LOG_TAG, "Data received");
         Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
-        intent.putExtra(OverviewPresenter.INTENT_KEY_ROUTES, schema);
+        intent.putExtra(OverviewPresenter.INTENT_KEY_ROUTES, routes);
         startActivity(intent);
       }
     }, "data.json");
-
-    svgService.loadSvgFromServer(new Subscriber<byte[]>() {
-      @Override
-      public void onCompleted() {
-        Logger.e(LOG_TAG, "Completed");
-      }
-
-      @Override
-      public void onError(Throwable e) {
-        Logger.e(LOG_TAG, "Problem",  e);
-      }
-
-      @Override
-      public void onNext(byte[] bytes) {
-        try {
-          ImageView image = (ImageView) findViewById(R.id.image);
-          SVGHelper
-            .useContext(MainActivity.this)
-            .open(new String(bytes))
-            .setBaseBounds(20, 20)
-            .setKeepAspectRatio(true)
-            .pictureAsBackground(image);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-    }, "https://d3m2tfu2xpiope.cloudfront.net/vehicles/subway.svg");
-
   }
 }
