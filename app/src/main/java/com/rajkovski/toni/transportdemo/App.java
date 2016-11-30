@@ -19,6 +19,9 @@ public class App extends Application{
     super.onCreate();
     instance = this;
 
+  }
+
+  protected void createAppComponent() {
     appComponent = DaggerAppComponent.builder()
       .appModule(new AppModule())
       .build();
@@ -39,6 +42,14 @@ public class App extends Application{
    * @return AppComponent
    */
   public AppComponent getAppComponent() {
+    if (appComponent == null) {
+      createAppComponent();
+    }
     return appComponent;
+  }
+
+  public void replaceAppCompoment(AppComponent appComponent) {
+    this.appComponent = appComponent;
+
   }
 }
