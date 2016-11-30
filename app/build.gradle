@@ -45,6 +45,9 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    lintOptions {
+        lintConfig file("lint.xml")
+    }
 }
 
 dependencies {

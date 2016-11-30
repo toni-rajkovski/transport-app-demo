@@ -12,6 +12,7 @@ import com.rajkovski.toni.transportdemo.TestBuildConfig;
 import com.rajkovski.toni.transportdemo.model.Price;
 import com.rajkovski.toni.transportdemo.model.Route;
 import com.rajkovski.toni.transportdemo.model.Segment;
+import com.rajkovski.toni.transportdemo.model.Stop;
 import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 
 import org.junit.Test;
@@ -50,6 +51,15 @@ public class RoutesAdapterTest {
     segment.setName("U2");
     segment.setColor("#aaaaaa");
     route.getSegments().add(segment);
+
+    Stop stop1 = new Stop();
+    stop1.setDatetime("2015-04-17T13:30:00+0200");
+    segment.getStops().add(stop1);
+
+    Stop stop2 = new Stop();
+    stop2.setDatetime("2015-04-17T13:38:00+0200");
+    segment.getStops().add(stop2);
+
     routes.getRoutes().add(route);
     RoutesAdapter routesAdapter = new RoutesAdapter(activity, routes);
     RoutesAdapter.ViewHolder viewHolder = routesAdapter.new ViewHolder(routeView);
@@ -67,7 +77,7 @@ public class RoutesAdapterTest {
     View background = firstSegment.findViewById(R.id.overview_route_segment_image_background);
 
 
-    assertEquals(activity.getString(R.string.public_transport), typeView.getText());
+    assertEquals(activity.getString(R.string.public_transport) + " (8min)", typeView.getText());
     assertEquals("EUR 100", costView.getText());
     assertEquals("U2", segmentNameText.getText());
     assertEquals("U2", segmentNameText.getText());
