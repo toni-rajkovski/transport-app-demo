@@ -7,8 +7,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.rajkovski.toni.transportdemo.R;
 import com.rajkovski.toni.transportdemo.model.TransportRoutes;
+import com.rajkovski.toni.transportdemo.ui.AbstractBaseActivity;
 
-public class OverviewActivity extends AppCompatActivity implements IOverviewView {
+public class OverviewActivity extends AbstractBaseActivity implements IOverviewView {
 
   private static final String LOG_TAG = "OverviewActivity";
 
@@ -30,6 +31,8 @@ public class OverviewActivity extends AppCompatActivity implements IOverviewView
 
   @Override
   public void onRoutesDisplay(TransportRoutes routes) {
+    removeError();
+
     RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.overview_recycler_view);
 
     mRecyclerView.setHasFixedSize(true);
@@ -41,5 +44,10 @@ public class OverviewActivity extends AppCompatActivity implements IOverviewView
     // specify an adapter (see also next example)
     RecyclerView.Adapter adapter = new RoutesAdapter(this, routes);
     mRecyclerView.setAdapter(adapter);
+  }
+
+  @Override
+  public void onErrorDisplay(int errorId) {
+    displayError(getString(errorId));
   }
 }
