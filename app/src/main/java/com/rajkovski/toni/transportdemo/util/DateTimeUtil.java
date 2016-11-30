@@ -43,10 +43,10 @@ public class DateTimeUtil {
       String res = "";
       diff /= 1000L * 60;
       if (diff > 60) {
-        res += (diff % 60) + ":";
+        res += (diff % 60) + "h ";
         diff /= 60;
       }
-      res += diff;
+      res += diff + "min";
       return res;
     } else {
       return "";

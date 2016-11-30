@@ -15,11 +15,14 @@ import com.rajkovski.toni.transportdemo.logger.Logger;
 import com.rajkovski.toni.transportdemo.model.ModelUtil;
 import com.rajkovski.toni.transportdemo.model.Route;
 import com.rajkovski.toni.transportdemo.model.Segment;
+import com.rajkovski.toni.transportdemo.model.Stop;
 import com.rajkovski.toni.transportdemo.model.TransportRoutes;
 import com.rajkovski.toni.transportdemo.services.svg.SvgService;
+import com.rajkovski.toni.transportdemo.util.DateTimeUtil;
 import com.scand.svg.SVGHelper;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -61,8 +64,13 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
       } else {
         priceText.setText("");
       }
-      routeTypeText.setText(
-        findRouteTypeText(route.getType()));
+      String timeDiff = findTimeInterval(route);
+      if (timeDiff != null) {
+        routeTypeText.setText(context.getString(findRouteTypeText(route.getType()))
+          + " (" + timeDiff + ")");
+      } else {
+        routeTypeText.setText(findRouteTypeText(route.getType()));
+      }
 
       String providerUrl = ModelUtil.findProviderIconUrl(transportRoutes, route.getProvider());
       if (providerUrl != null) {
@@ -80,6 +88,8 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
         imageBackground.setBackgroundColor(Color.parseColor(segment.getColor()));
         ((TextView) segmentView.findViewById(R.id.overview_route_segment_name)).setText(
           segment.getName());
+        ((TextView) segmentView.findViewById(R.id.overview_route_segment_start_time)).setText(
+          DateTimeUtil.timeStringHHMM(segment.getStops().get(0).getDatetime()));
         segmentsHolder.addView(segmentView);
       }
       viewsHolder.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +153,19 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
   private int findRouteTypeText(String routeType) {
     return App.getInstance().getResources().getIdentifier(
       routeType, "string", App.getInstance().getPackageName());
+  }
+
+  private String findTimeInterval(Route route) {
+    if (route.getSegments() != null) {
+      Segment firstSegment = route.getSegments().get(0);
+      Segment lastSegment = route.getSegments().get(route.getSegments().size() - 1);
+      Stop firstStop = firstSegment.getStops().get(0);
+      Stop lastStop = lastSegment.getStops().get(lastSegment.getStops().size() - 1);
+
+      return DateTimeUtil.minutesDiff(firstStop.getDatetime(), lastStop.getDatetime());
+    } else {
+      return null;
+    }
   }
 
   @Override

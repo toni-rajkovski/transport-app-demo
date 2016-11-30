@@ -5,6 +5,13 @@
               android:paddingRight="10dp"
               android:orientation="vertical">
 
+  <TextView
+    android:id="@+id/overview_route_segment_start_time"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="12sp"
+    android:textColor="@android:color/darker_gray"/>
+
   <LinearLayout
     android:id="@+id/overview_route_segment_image_background"
     android:layout_width="wrap_content"
