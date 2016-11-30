@@ -20,10 +20,29 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+    signingConfigs {
+        debug {
+            storeFile file("${project.rootDir}/gradle/configs/debug/debug_key.jks")
+            storePassword "transport"
+            keyAlias "transport"
+            keyPassword "transport"
+        }
+        release {
+            // TODO remove this info from here. The parameters should be passed on command line
+            storeFile file("${project.rootDir}/gradle/configs/release/release_key.jks")
+            storePassword "transport"
+            keyAlias "transport"
+            keyPassword "transport"
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
 }
@@ -45,6 +64,9 @@ dependencies {
 
     // http
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
+
+    //maps
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
