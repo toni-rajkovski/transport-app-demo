@@ -34,12 +34,50 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
   @Inject
   SvgService svgService;
 
-  public static class ViewHolder extends RecyclerView.ViewHolder {
+  public class ViewHolder extends RecyclerView.ViewHolder {
     ViewGroup viewsHolder;
+    TextView priceText;
+    TextView routeTypeText;
+    ImageView providerImage;
+    ViewGroup segmentsHolder;
 
-    ViewHolder(ViewGroup v) {
+    public ViewHolder(ViewGroup v) {
       super(v);
       viewsHolder = v;
+
+      priceText = (TextView) viewsHolder.findViewById(R.id.overview_route_cost);
+      routeTypeText = (TextView) viewsHolder.findViewById(R.id.overview_route_type);
+      providerImage = (ImageView) viewsHolder.findViewById(R.id.overview_route_provider_icon);
+      segmentsHolder = (ViewGroup) viewsHolder.findViewById(R.id.overview_route_segments);
+    }
+
+    void fillWithData(Route route) {
+      if (route.getPrice() != null) {
+        priceText.setText(route.getPrice().getCurrency() + " " + route.getPrice().getAmount());
+      } else {
+        priceText.setText("");
+      }
+      routeTypeText.setText(
+        findRouteTypeText(route.getType()));
+
+      String providerUrl = ModelUtil.findProviderIconUrl(transportRoutes, route.getProvider());
+      if (providerUrl != null) {
+        loadAndDisplaySvgImage(providerUrl, providerImage);
+      }
+
+      segmentsHolder.removeAllViews();
+      for (Segment segment: route.getSegments()) {
+        View segmentView = LayoutInflater.from(context).inflate(R.layout.segment_item, null);
+        ImageView segmentImage = (ImageView) segmentView.findViewById(R.id.overview_route_segment_image);
+        loadAndDisplaySvgImage(segment.getIcon_url(),
+          segmentImage);
+
+        View imageBackground = segmentView.findViewById(R.id.overview_route_segment_image_background);
+        imageBackground.setBackgroundColor(Color.parseColor(segment.getColor()));
+        ((TextView) segmentView.findViewById(R.id.overview_route_segment_name)).setText(
+          segment.getName());
+        segmentsHolder.addView(segmentView);
+      }
     }
   }
 
@@ -61,36 +99,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     Route route = transportRoutes.getRoutes().get(position);
-    TextView priceText = (TextView) holder.viewsHolder.findViewById(R.id.overview_route_cost);
-    if (route.getPrice() != null) {
-      priceText.setText(route.getPrice().getCurrency() + " " + route.getPrice().getAmount());
-    } else {
-      priceText.setText("");
-    }
-    ((TextView) holder.viewsHolder.findViewById(R.id.overview_route_type)).setText(
-      findRouteTypeText(route.getType()));
-
-    String providerUrl = ModelUtil.findProviderIconUrl(transportRoutes, route.getProvider());
-    if (providerUrl != null) {
-      loadAndDisplaySvgImage(providerUrl,
-        (ImageView) holder.viewsHolder.findViewById(R.id.overview_route_provider_icon));
-    }
-
-    ViewGroup segmentsHolder =
-      (ViewGroup) holder.viewsHolder.findViewById(R.id.overview_route_segments);
-    segmentsHolder.removeAllViews();
-    for (Segment segment: route.getSegments()) {
-      View segmentView = LayoutInflater.from(context).inflate(R.layout.segment_item, null);
-      ImageView segmentImage = (ImageView) segmentView.findViewById(R.id.overview_route_segment_image);
-      loadAndDisplaySvgImage(segment.getIcon_url(),
-        segmentImage);
-
-      View imageBackground = segmentView.findViewById(R.id.overview_route_segment_image_background);
-      imageBackground.setBackgroundColor(Color.parseColor(segment.getColor()));
-      ((TextView) segmentView.findViewById(R.id.overview_route_segment_name)).setText(
-        segment.getName());
-      segmentsHolder.addView(segmentView);
-    }
+    holder.fillWithData(route);
   }
 
   private void loadAndDisplaySvgImage(final String url, final ImageView view) {
@@ -101,6 +110,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
 
       @Override
       public void onError(Throwable e) {
+        //TODO we can add some default error image instead
         Logger.w(LOG_TAG, "Cannot load image from url " + url, e);
       }
 
@@ -114,7 +124,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
             .setKeepAspectRatio(true)
             .pictureAsBackground(view);
         } catch (IOException e) {
-          e.printStackTrace();
+          Logger.e(LOG_TAG, "Problem displaying svg for url: " + url, e);
         }
       }
     }, url);

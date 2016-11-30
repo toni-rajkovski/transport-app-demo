@@ -36,7 +36,6 @@ public class RoutesAdapterTest {
     ViewGroup routeView = (ViewGroup) LayoutInflater.from(activity).inflate(
       R.layout.route_item, null);
 
-    RoutesAdapter.ViewHolder viewHolder = new RoutesAdapter.ViewHolder(routeView);
 
     TransportRoutes routes = new TransportRoutes();
     Route route = new Route();
@@ -53,6 +52,7 @@ public class RoutesAdapterTest {
     route.getSegments().add(segment);
     routes.getRoutes().add(route);
     RoutesAdapter routesAdapter = new RoutesAdapter(activity, routes);
+    RoutesAdapter.ViewHolder viewHolder = routesAdapter.new ViewHolder(routeView);
 
     //when
     routesAdapter.onBindViewHolder(viewHolder, 0);

@@ -1,7 +1,6 @@
 package com.rajkovski.toni.transportdemo.ui.overview;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -44,6 +43,7 @@ public class OverviewActivity extends AbstractBaseActivity implements IOverviewV
     // specify an adapter (see also next example)
     RecyclerView.Adapter adapter = new RoutesAdapter(this, routes);
     mRecyclerView.setAdapter(adapter);
+
   }
 
   @Override
