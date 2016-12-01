@@ -1,7 +1,7 @@
 # transport-app-demo
 
-![Screenshot](https://raw.githubusercontent.com/toni-rajkovski/transport-app-demo/master/overview_screen.png)
-![Screenshot](https://raw.githubusercontent.com/toni-rajkovski/transport-app-demo/master/maps_screen.png)
+![Overview Screen](https://raw.githubusercontent.com/toni-rajkovski/transport-app-demo/master/overview_screen.png | width=200)
+![Maps Screen](https://raw.githubusercontent.com/toni-rajkovski/transport-app-demo/master/maps_screen.png | width=200)
 
 # Overview
 The App loads the json data from the assets folder and displays it.
@@ -15,20 +15,20 @@ The App loads the json data from the assets folder and displays it.
 * Minimum supported version of Android is KitKat(4.4, API Level 19)
 
 # Build
-## Build the project with the gradle wrapper
+### Build the project with the gradle wrapper
 ```
 gradlew build
 ```
 When you clone the project you need to build it first before start with development. Both Model classes and Dagger 2 specific classes needs to be generated first.
 
-## Run the Unit tests
+### Run the Unit tests
 ```
 gradlew test
 ```
 The App uses both JUnit tests and Robolectric Unit tests for Android specific stuff.
 Most of the tests are pure JUnit tests which are quite faster then Robolectric ones. Only in the place where Android specific stuff is required for testing Robolectric is used.
 
-## Run the UI tests(Espresso)
+### Run the UI tests(Espresso)
 ```
 gradlew cAT
 ```
@@ -46,7 +46,6 @@ You'll need a connected device in order to run the UI tests(no internet connecti
 * jsonschema2pojo to generate the model from the json file
 * RecyclerView for displaying the list of the routes
 * Android Support Library for backwards compatibility
-
 * Robolectric for Unit tests
 * Mockito for mocking data
 * Espresso for UI tests
