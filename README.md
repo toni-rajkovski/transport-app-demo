@@ -1,7 +1,7 @@
 # transport-app-demo
 
-![Overview Screen](https://raw.githubusercontent.com/toni-rajkovski/transport-app-demo/master/overview_screen.png | width=200)
-![Maps Screen](https://raw.githubusercontent.com/toni-rajkovski/transport-app-demo/master/maps_screen.png | width=200)
+![Overview Screen](https://raw.githubusercontent.com/toni-rajkovski/transport-app-demo/master/overview_screen.png)
+![Maps Screen](https://raw.githubusercontent.com/toni-rajkovski/transport-app-demo/master/maps_screen.png)
 
 # Overview
 The App loads the json data from the assets folder and displays it.
