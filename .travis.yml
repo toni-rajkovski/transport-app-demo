@@ -3,9 +3,6 @@ jdk: oraclejdk8
 
 android:
   components:
-
-    - tools
-
     # The BuildTools version used by your project
     - build-tools-24.0.0
 
@@ -23,3 +20,5 @@ android:
     - google-gdk-license-.+
 
 script: ./gradlew clean build
+
+after_failure: "cat /home/travis/build/toni-rajkovski/transport-app-demo/app/build/outputs/lint-results.xml"
