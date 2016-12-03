@@ -17,3 +17,5 @@ android:
     - addon-google_apis-google-24
 
     - sys-img-armeabi-v7a-android-24
+
+script: ./gradlew clean build
