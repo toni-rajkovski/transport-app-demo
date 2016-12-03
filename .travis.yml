@@ -1,8 +1,9 @@
 language: android
-jdk: oraclejdk7
+jdk: oraclejdk8
 
 android:
   components:
+    - tools
 
     # The BuildTools version used by your project
     - build-tools-24.0.0
@@ -15,5 +16,11 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-24
+  licenses:
+    - android-sdk-license-c81a61d9
+    - android-sdk-license-.+
+    - google-gdk-license-.+
 
-    - sys-img-armeabi-v7a-android-24
+script: ./gradlew clean build
+
+after_failure: "cat /home/travis/build/toni-rajkovski/transport-app-demo/app/build/outputs/lint-results-debug.xml"
