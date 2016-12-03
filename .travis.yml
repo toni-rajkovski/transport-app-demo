@@ -23,4 +23,4 @@ android:
 
 script: ./gradlew clean build
 
-after_failure: "cat /home/travis/build/toni-rajkovski/transport-app-demo/app/build/outputs/lint-results.xml"
+after_failure: "cat /home/travis/build/toni-rajkovski/transport-app-demo/app/build/outputs/lint-results-debug.xml"
