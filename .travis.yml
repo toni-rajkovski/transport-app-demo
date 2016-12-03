@@ -3,6 +3,7 @@ jdk: oraclejdk8
 
 android:
   components:
+    -tools
 
     # The BuildTools version used by your project
     - build-tools-24.0.0
@@ -15,13 +16,9 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-24
-    - sys-img-armeabi-v7a-android-24
   licenses:
+    - android-sdk-license-c81a61d9
     - android-sdk-license-.+
     - google-gdk-license-.+
-
-
-before_script:
-  - "android update sdk --no-ui --filter build-tools-24.0.1,android-24,extra-android-m2repository"
 
 script: ./gradlew clean build
